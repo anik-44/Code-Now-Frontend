@@ -1,24 +1,50 @@
 import "./App.css";
+import Protected from "./components/auth/Protected";
 import HomePage from "./pages/HomePage";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import { Toaster } from "@/components/ui/toaster";
 // import ProblemAndEditorWrapper from "./components/Coding/ProblemAndEditorWrapper";
 // import ProblemNavBar from "./components/Coding/ProblemNavBar";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: (
+      <Protected authentication={true}>
+        <HomePage />,
+      </Protected>
+    ),
+  },
+  {
+    path: "/register",
+    element: (
+      <Protected authentication={false}>
+        <Register />,
+      </Protected>
+    ),
+  },
+  {
+    path: "/login",
+    element: (
+      <Protected authentication={false}>
+        <Login />
+      </Protected>
+    ),
+  },
+]);
 
 function App() {
   return (
     <>
-      <div className="h-screen w-screen flex justify-center">
-        {/* <ProblemNavBar /> */}
-        {/* <div className="p-2">
+      <Toaster />
+      <RouterProvider router={router} />
+      {/* <div className="h-screen w-screen flex justify-center"> */}
+      {/* <ProblemNavBar /> */}
+      {/* <div className="p-2">
           <ProblemAndEditorWrapper />
         </div> */}
-        <div className=" p-10 h-screen my-auto flex justify-center items-center ">
-          {/* <Register /> */}
-          <Login />
-        </div>
-        {/* <HomePage /> */}
-      </div>
     </>
   );
 }
