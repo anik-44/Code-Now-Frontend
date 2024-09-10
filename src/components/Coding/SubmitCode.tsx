@@ -2,11 +2,20 @@ import { Button } from "../ui/button";
 import { Badge } from "@/components/ui/badge";
 import { CaretDownIcon } from "@radix-ui/react-icons";
 
-function SubmitCode() {
+interface SubmitCodeProps {
+  toggleConsole: () => void;
+}
+function SubmitCode({ toggleConsole }: SubmitCodeProps) {
   return (
     <div className="flex justify-between px-4 items-center border-2 border-gray-200">
       <div className="ml-1">
-        <Badge variant="secondary" className="cursor-pointer flex">
+        <Badge
+          variant="secondary"
+          className="cursor-pointer flex "
+          onClick={() => {
+            toggleConsole();
+          }}
+        >
           <span>Console</span>
           <span>
             <CaretDownIcon />

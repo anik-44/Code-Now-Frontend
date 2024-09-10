@@ -11,10 +11,11 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { MoonIcon, ResetIcon } from "@radix-ui/react-icons";
+import { ResetIcon } from "@radix-ui/react-icons";
 
+type languages = "java" | "cpp";
 export default function EditorHeader() {
-  const [position, setPosition] = React.useState("bottom");
+  const [position, setPosition] = React.useState<languages>("bottom");
   console.log(position);
 
   return (
@@ -24,7 +25,7 @@ export default function EditorHeader() {
           <DropdownMenuTrigger asChild>
             <Button variant="outline">{position}</Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent className="w-56">
+          <DropdownMenuContent className="w-10">
             <DropdownMenuSeparator />
             <DropdownMenuRadioGroup
               value={position}
@@ -34,17 +35,13 @@ export default function EditorHeader() {
               <DropdownMenuRadioItem value="Bottom">
                 Bottom
               </DropdownMenuRadioItem>
-              <DropdownMenuRadioItem value="Right">Right</DropdownMenuRadioItem>
             </DropdownMenuRadioGroup>
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
       <div className="mr-5">
-        <button className="px-10">
-          <ResetIcon />
-        </button>
         <button>
-          <MoonIcon />
+          <ResetIcon />
         </button>
       </div>
     </div>

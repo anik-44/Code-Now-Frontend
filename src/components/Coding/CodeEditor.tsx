@@ -1,11 +1,15 @@
 import Editor from "@monaco-editor/react";
-import ConsoleMenu from "./ConsoleMenu";
 import { useState } from "react";
 import SubmitCode from "./SubmitCode";
 import { Card } from "../ui/card";
 import EditorHeader from "./EditorHeader";
+import ConsoleMenu from "./ConsoleMenu";
 
-export default function CodeEditor() {
+interface codeEditorProps {
+  input: string;
+  output: string;
+}
+export default function CodeEditor({ input, output }: codeEditorProps) {
   // function handleEditorChange(value, event) {
   //   // here is the current value
   // }
@@ -26,14 +30,16 @@ export default function CodeEditor() {
 
   const [isConsoleVisible, setIsConsoleVisible] = useState(true);
 
-  //   setIsConsoleVisible((prev) => !prev);
-  // };
+  const toggleConsole = () => {
+    setIsConsoleVisible((prev) => !prev);
+  };
+
   return (
-    <Card className="flex flex-col h-[90vh]">
-      {/* Top Panel (Editor) */}
+    <Card className="flex flex-col h-[92vh] mx-2">
       <Card className="py-2 flex rounded-b-none">
         <EditorHeader />
       </Card>
+
       <div
         className={`flex-1 ${
           isConsoleVisible ? "h-1/2" : "h-full"
@@ -62,21 +68,13 @@ export default function CodeEditor() {
         />
       </div>
 
-      {/* Toggle Button
-      <button
-        onClick={toggleConsole}
-        className="bg-blue-500 text-white p-2 w-full"
-      >
-        {isConsoleVisible ? "Hide Console" : "Show Console"}
-      </button> */}
-      {/* Bottom Panel (Console) */}
       {isConsoleVisible && (
         <div className="transition-all duration-300">
-          <ConsoleMenu />
+          <ConsoleMenu input={input} output={output} />
         </div>
       )}
       <div>
-        <SubmitCode />
+        <SubmitCode toggleConsole={toggleConsole} />
       </div>
     </Card>
   );

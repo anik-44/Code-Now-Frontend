@@ -1,49 +1,58 @@
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import { CardDescription, CardTitle } from "../ui/card";
+import { Difficulty, ProblemDetail } from "@/types/problemTypes";
 
-function Problem() {
+interface ProblemProps {
+  problem: ProblemDetail;
+}
+function Problem({ problem }: ProblemProps) {
+  const decodedInput = problem?.input
+    ? atob(problem.input)
+    : "No input available";
+
+  const decodedOutput = problem?.output
+    ? atob(problem.output)
+    : "No output available";
+
+  const getDifficultyColor = (difficulty: Difficulty) => {
+    switch (difficulty) {
+      case Difficulty.Easy:
+        return "text-green-500";
+      case Difficulty.Medium:
+        return "text-yellow-500";
+      case Difficulty.Hard:
+        return "text-red-500";
+      default:
+        return "text-gray-500";
+    }
+  };
+
   return (
-    <Card className="h-full">
-      <CardHeader className="box-border border-b-2 items-center py-2 border-gray-100">
-        <div className="w-full items-center">
-          <ul className="flex justify-start list-none items-center ">
-            <Button variant="link">
-              <span className="text-lg">Question</span>
-            </Button>
-            <Button variant="link">
-              <span className="text-lg">Submissions</span>
-            </Button>
-          </ul>
+    <>
+      <div className="my-5">
+        <CardTitle className="text-xl py-2">{problem?.title}</CardTitle>
+        <p
+          className={
+            problem?.difficulty && getDifficultyColor(problem?.difficulty)
+          }
+        >
+          {problem?.difficulty}
+        </p>
+      </div>
+      <CardDescription className="my-10 mt-5">
+        <p className="text-lg text-black">{problem?.description}</p>
+      </CardDescription>
+      <div className="my-5">
+        <div className="bg-[#F4F4F4] p-3 text-lg rounded-lg">
+          <p className="font-bold">Input:</p>
+          <p className="bg-[#F4F4F4] w-full h-max">{decodedInput}</p>
         </div>
-      </CardHeader>
-      <CardContent className="pt-2 flex flex-col justify-around ">
-        <div className="my-5">
-          <CardTitle className="text-xl py-2">Title</CardTitle>
-          <p>Tag</p>
+        <div className="bg-[#F4F4F4] my-5 p-3 text-lg rounded-lg">
+          <p className="font-bold">Output:</p>
+          <p className="bg-[#F4F4F4] w-full h-max">{decodedOutput}</p>
         </div>
-        <CardDescription className="my-10 mt-5">
-          <p className="text-lg text-black">
-            Deploy your new project in one-click.
-          </p>
-        </CardDescription>
-        <div className="my-5">
-          <div className="bg-[#F4F4F4] p-3 text-lg rounded-lg">
-            <p className="font-bold">Input:</p>
-            <p className="bg-[#F4F4F4] w-full h-max">1 5 6 5</p>
-          </div>
-          <div className="bg-[#F4F4F4] my-5 p-3 text-lg rounded-lg">
-            <p className="font-bold">Output:</p>
-            <p className="bg-[#F4F4F4] w-full h-max">1 5 6 5</p>
-          </div>
-        </div>
-      </CardContent>
-    </Card>
+      </div>
+    </>
   );
 }
+
 export default Problem;

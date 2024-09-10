@@ -1,5 +1,6 @@
 import "./App.css";
 import Protected from "./components/auth/Protected";
+import ProblemAndEditorWrapper from "./components/Coding/ProblemAndEditorWrapper";
 import HomePage from "./pages/HomePage";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
@@ -30,6 +31,14 @@ const router = createBrowserRouter([
     element: (
       <Protected authentication={false}>
         <Login />
+      </Protected>
+    ),
+  },
+  {
+    path: "/problems/:slug_id",
+    element: (
+      <Protected authentication={true}>
+        <ProblemAndEditorWrapper />
       </Protected>
     ),
   },
