@@ -42,6 +42,31 @@ class AuthService {
       }
     }
   }
+
+  async logout(): Promise<any> {
+    try {
+      const response = await axios.post(
+        `/api/users/logout`,
+        {},
+        {
+          withCredentials: true,
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      return response;
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        console.error(
+          "Error during logout:",
+          error.response?.data || error.message
+        );
+      } else {
+        console.error("Unexpected error:", error);
+      }
+    }
+  }
 }
 
 const authService = new AuthService();

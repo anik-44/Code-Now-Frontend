@@ -1,4 +1,3 @@
-import { CardDescription, CardTitle } from "../ui/card";
 import { Difficulty, ProblemDetail } from "@/types/problemTypes";
 
 interface ProblemProps {
@@ -29,7 +28,7 @@ function Problem({ problem }: ProblemProps) {
   return (
     <>
       <div className="my-5">
-        <CardTitle className="text-xl py-2">{problem?.title}</CardTitle>
+        <div className="text-xl py-2">{problem?.title}</div>
         <p
           className={
             problem?.difficulty && getDifficultyColor(problem?.difficulty)
@@ -38,9 +37,9 @@ function Problem({ problem }: ProblemProps) {
           {problem?.difficulty}
         </p>
       </div>
-      <CardDescription className="my-10 mt-5">
+      <div className="my-10 mt-5">
         <p className="text-lg text-black">{problem?.description}</p>
-      </CardDescription>
+      </div>
       <div className="my-5">
         <div className="bg-[#F4F4F4] p-3 text-lg rounded-lg">
           <p className="font-bold">Input:</p>

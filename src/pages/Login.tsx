@@ -13,12 +13,14 @@ import {
 import { Input } from "@/components/ui/input";
 import { loginSchema } from "@/schema/authSchema";
 import { Link, useNavigate } from "react-router-dom";
-import authService from "@/services/authService";
 import { useToast } from "@/hooks/use-toast";
+import { useDispatch } from "react-redux";
+import { login } from "@/store/authSlice";
 
 export default function Login() {
   const { toast } = useToast();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
@@ -30,30 +32,17 @@ export default function Login() {
 
   // submit handler.
   async function onSubmit(values: z.infer<typeof loginSchema>) {
-    try {
-      const data = await authService.login(values);
-      if (data.status === 200) {
-        form.reset();
-        toast({
-          title: "Login Successful",
-        });
-        navigate("/");
-      } else {
-        form.reset();
-        toast({
-          title: "Login Failed",
-          variant: "destructive",
-        });
-      }
-    } catch (error: any) {
-      console.error(error);
-      toast({
-        title: "Login Failed",
-        description: error.message,
-        variant: "destructive",
-      });
-    }
+    dispatch(
+      // @ts-expect-error('')
+      login({
+        credentials: values,
+        toast,
+        successCallback: () => navigate("/"),
+        form,
+      })
+    );
   }
+
   return (
     <div className=" py-5 h-screen my-auto flex justify-center items-center ">
       <div className="w-96 shadow-lg p-10 rounded-lg">
@@ -80,7 +69,7 @@ export default function Login() {
                   <FormControl>
                     <Input
                       placeholder="email"
-                      className="text-lg"
+                      className="text-md"
                       type="email"
                       {...field}
                     />
@@ -98,7 +87,7 @@ export default function Login() {
                   <FormControl>
                     <Input
                       placeholder="password"
-                      className="text-lg"
+                      className="text-md"
                       type="password"
                       {...field}
                     />

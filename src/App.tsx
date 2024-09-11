@@ -1,3 +1,4 @@
+import { Provider } from "react-redux";
 import "./App.css";
 import Protected from "./components/auth/Protected";
 import ProblemAndEditorWrapper from "./components/Coding/ProblemAndEditorWrapper";
@@ -8,6 +9,7 @@ import { Toaster } from "@/components/ui/toaster";
 // import ProblemAndEditorWrapper from "./components/Coding/ProblemAndEditorWrapper";
 // import ProblemNavBar from "./components/Coding/ProblemNavBar";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import store from "./store/store";
 
 const router = createBrowserRouter([
   {
@@ -47,8 +49,10 @@ const router = createBrowserRouter([
 function App() {
   return (
     <>
-      <Toaster />
-      <RouterProvider router={router} />
+      <Provider store={store}>
+        <Toaster />
+        <RouterProvider router={router} />
+      </Provider>
     </>
   );
 }
