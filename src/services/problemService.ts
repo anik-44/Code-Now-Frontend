@@ -32,7 +32,6 @@ class ProblemService {
           "Content-Type": "application/json",
         },
       });
-      console.log(response);
       return response.data.problem;
     } catch (error) {
       if (axios.isAxiosError(error)) {

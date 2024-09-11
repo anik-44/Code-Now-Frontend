@@ -1,7 +1,4 @@
 "use client";
-
-import * as React from "react";
-
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -11,36 +8,46 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { ResetIcon } from "@radix-ui/react-icons";
+import { CaretDownIcon, ResetIcon } from "@radix-ui/react-icons";
+import { Languages } from "@/types/submissionTypes";
 
-type languages = "java" | "cpp";
-export default function EditorHeader() {
-  const [position, setPosition] = React.useState<languages>("bottom");
-  console.log(position);
-
+interface EditorHeaderProps {
+  language: Languages;
+  setLanguage: (value: Languages) => void;
+  resetEditor: () => void;
+}
+export default function EditorHeader({
+  language,
+  setLanguage,
+  resetEditor,
+}: EditorHeaderProps) {
   return (
     <div className="w-full  flex justify-between items-center">
       <div className="ml-5">
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="outline">{position}</Button>
+            <Button variant="outline">
+              {language}
+              <span>
+                <CaretDownIcon />
+              </span>
+            </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent className="w-10">
             <DropdownMenuSeparator />
             <DropdownMenuRadioGroup
-              value={position}
-              onValueChange={setPosition}
+              value={language}
+              // @ts-expect-error('')
+              onValueChange={setLanguage}
             >
-              <DropdownMenuRadioItem value="Top">Top</DropdownMenuRadioItem>
-              <DropdownMenuRadioItem value="Bottom">
-                Bottom
-              </DropdownMenuRadioItem>
+              <DropdownMenuRadioItem value="Java">Java</DropdownMenuRadioItem>
+              <DropdownMenuRadioItem value="Cpp">Cpp</DropdownMenuRadioItem>
             </DropdownMenuRadioGroup>
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
       <div className="mr-5">
-        <button>
+        <button onClick={resetEditor}>
           <ResetIcon />
         </button>
       </div>

@@ -1,15 +1,12 @@
 import { Button } from "../ui/button";
-import { RocketIcon, SunIcon } from "@radix-ui/react-icons";
+import { SunIcon } from "@radix-ui/react-icons";
 import AvatarComponent from "../Avatar";
+import Logo from "../Logo";
 
 function ProblemNavBar() {
   return (
     <div className="flex flex-row justify-between items-center h-16 border-b-2 border-gray px-2">
-      <div className="flex flex-row text-4xl ml-5">
-        <button>
-          <RocketIcon className="w-10 h-10" />
-        </button>
-      </div>
+      <Logo />
       <div>
         <Button className="w-20 mr-2">Previous</Button>
         <Button className="w-20 ml-2">Next</Button>

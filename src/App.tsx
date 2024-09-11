@@ -49,11 +49,6 @@ function App() {
     <>
       <Toaster />
       <RouterProvider router={router} />
-      {/* <div className="h-screen w-screen flex justify-center"> */}
-      {/* <ProblemNavBar /> */}
-      {/* <div className="p-2">
-          <ProblemAndEditorWrapper />
-        </div> */}
     </>
   );
 }
