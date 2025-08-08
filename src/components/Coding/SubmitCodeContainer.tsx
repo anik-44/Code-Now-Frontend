@@ -8,7 +8,7 @@ interface SubmitCodeProps {
   runCode: () => void;
   loading: boolean;
 }
-function SubmitCode({
+function SubmitCodeContainer({
   toggleConsole,
   submitCode,
   runCode,
@@ -56,4 +56,4 @@ function SubmitCode({
   );
 }
 
-export default SubmitCode;
+export default SubmitCodeContainer;

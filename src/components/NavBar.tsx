@@ -1,4 +1,4 @@
-import { RocketIcon, SunIcon } from "@radix-ui/react-icons";
+import {RocketIcon} from "@radix-ui/react-icons";
 import AvatarComponent from "./Avatar";
 import Logo from "./Logo";
 
@@ -13,9 +13,6 @@ export default function NavBar() {
         </h1>
       </div>
       <div className="flex flex-row justify-around items-center text-4xl mr-12">
-        <button className="mr-5">
-          <SunIcon className="w-5 h-5 " />
-        </button>
         <AvatarComponent />
       </div>
     </div>

@@ -1,18 +1,6 @@
 export enum Difficulty {
-  Easy = "Easy",
-  Medium = "Medium",
-  Hard = "Hard",
+  Easy = "EASY",
+  Medium = "MEDIUM",
+  Hard = "HARD",
 }
 
-export interface Problem {
-  id?: number;
-  title?: string;
-  slug?: string;
-  description?: string;
-  difficulty?: Difficulty;
-}
-
-export interface ProblemDetail extends Problem {
-  input: string;
-  output: string;
-}

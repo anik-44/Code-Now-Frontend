@@ -1,53 +1,39 @@
-import { useCallback, useEffect } from "react";
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import {useEffect} from "react";
+import {useSelector} from "react-redux";
+import {useNavigate} from "react-router-dom";
 
-interface responseDataType {
-  isAuthenticated: boolean;
-}
+export default function Protected({
+                                      authentication,
+                                      children,
+                                  }: {
+    authentication: boolean;
+    children: React.ReactNode;
+}) {
+    const navigate = useNavigate();
+    const authStatus = useSelector((state: any) => state.user?.authStatus);
 
-function Protected({ authentication, children }: any) {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-
-  const validateToken = useCallback(async () => {
-    try {
-      const response = await axios.get<responseDataType>(
-        "/api/users/validate",
-        {
-          withCredentials: true,
+    useEffect(() => {
+        // If page requires authentication, and user is not authenticated
+        if (authentication && authStatus === false) {
+            navigate("/login", {replace: true});
         }
-      );
-      return response.data;
-    } catch (error) {
-      return { isAuthenticated: false, error };
+    }, [authStatus, authentication, navigate]);
+
+    // Don't block anything for public pages
+    if (!authentication) {
+        return <>{children}</>;
     }
-  }, []);
 
-  useEffect(() => {
-    const checkValidation = async () => {
-      const data = await validateToken();
-      if (
-        authentication &&
-        Boolean(data.isAuthenticated) !== Boolean(authentication)
-      ) {
-        // remove set user authstatus
-        // dispatch();
-        navigate("/login");
-      } else if (
-        !authentication &&
-        data?.isAuthenticated !== undefined &&
-        Boolean(data.isAuthenticated) !== Boolean(authentication)
-      ) {
-        navigate("/");
-      }
-    };
+    // If still checking auth, you can return loading or null
+    if (authStatus === null) {
+        return <div>Loading...</div>; // Optional spinner while checking
+    }
 
-    checkValidation();
-  }, [authentication, navigate, validateToken, dispatch]);
+    // If authenticated, render content
+    if (authStatus === true) {
+        return <>{children}</>;
+    }
 
-  return <>{children}</>;
+    // If not authenticated, and already redirected, render nothing
+    return null;
 }
-
-export default Protected;
